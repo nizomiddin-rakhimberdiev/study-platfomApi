@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from corsheaders.defaults import default_methods
 from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -31,7 +32,6 @@ CSRF_TRUSTED_ORIGINS = ['https://study-platform.up.railway.app']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +51,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -63,12 +64,49 @@ SWAGGER_SETTINGS = {
     'VALIDATOR_URL': 'http://localhost:8189',
 }
 
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:9000",
+    "http://localhost:5173",
+    "https://studyyplatform.netlify.app",
+    "https://6c5b-94-158-59-41.ngrok-free.app",
+    "http://127.0.0.1:5173",
+]
+
 CORS_ORIGIN_WHITELIST = [      
     "http://localhost:5173",
     "https://studyyplatform.netlify.app",
     "https://6c5b-94-158-59-41.ngrok-free.app",
     "http://127.0.0.1:5173",
 ]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.example\.com$",
+]
+
+CORS_URLS_REGEX = r"^/api/.*$"
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
+CORS_ALLOW_METHODS = (
+    *default_methods,
+    "POKE",
+)
+
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+)
 
 ROOT_URLCONF = 'studyPlatform.urls'
 
